@@ -42,16 +42,16 @@ include_once "./api/base.php";
             width:150px;
             height:100px;
         }
-        .list-item div:nth-child(1){
-            width:30%;
-        }
         .list-item div:nth-child(2){
             width:30%;
         }
         .list-item div:nth-child(3){
-            width:10%;
+            width:30%;
         }
         .list-item div:nth-child(4){
+            width:10%;
+        }
+        .list-item div:nth-child(5){
             width:20%;
         }
     </style>
@@ -87,28 +87,34 @@ echo "<div>檔名</div>";
 echo "<div>大小</div>";
 echo "<div>類型</div>";
 echo "</li>";
-    foreach($files as $file){
-        echo "<li class='list-item'>";
-            echo "<div>";
+foreach($files as $file){
+    echo "<li class='list-item'>";
+        echo "<div>";
+        if(is_image($file['type'])){
             echo "<img src='./upload/{$file['file_name']}'>";
-            echo "</div>";
-            echo "<div>";
-            echo $file['description'];
-            echo "</div>";
-            echo "<div>";
-            echo $file['file_name'];
-            echo "</div>";
-            echo "<div>";
-            echo $file['size'];
-            echo "</div>";
-            echo "<div>";
-            echo $file['type'];
-            echo "</div>";
-        echo "</li>";
-    }
+        }else{
+            $icon=dummy_icon($file['type']);
+            echo "<img src='./material/{$icon}' style='width:80px'>";
+
+        }
+        echo "</div>";
+        echo "<div>";
+        echo $file['description'];
+        echo "</div>";
+        echo "<div>";
+        echo $file['file_name'];
+        echo "</div>";
+        echo "<div>";
+        echo floor($file['size']/1024) . 'KB';
+        echo "</div>";
+        echo "<div>";
+        echo $file['type'];
+        echo "</div>";
+    echo "</li>";
+}
 echo "</ul>";
 }else{
-    echo "目前尚無上傳資料";
+echo "目前尚無上傳資料";
 }
 
 ?>
