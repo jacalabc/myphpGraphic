@@ -17,7 +17,7 @@ include_once "./api/base.php";
     <title>檔案上傳</title>
     <link rel="stylesheet" href="style.css">
     <style>
-       .list{
+        .list{
             list-style-type:none;
             padding: 0;
             margin:1rem auto;
@@ -91,39 +91,40 @@ echo "<div>描述</div>";
 echo "<div>檔名</div>";
 echo "<div>大小</div>";
 echo "<div>類型</div>";
+echo "<div>操作</div>";
 echo "</li>";
-foreach($files as $file){
-    echo "<li class='list-item'>";
-        echo "<div>";
-        if(is_image($file['type'])){
-            echo "<img src='./upload/{$file['file_name']}'>";
-        }else{
-            $icon=dummy_icon($file['type']);
-            echo "<img src='./material/{$icon}' style='width:80px'>";
+    foreach($files as $file){
+        echo "<li class='list-item'>";
+            echo "<div>";
+            if(is_image($file['type'])){
+                echo "<img src='./upload/{$file['file_name']}'>";
+            }else{
+                $icon=dummy_icon($file['type']);
+                echo "<img src='./material/{$icon}' style='width:80px'>";
 
-        }
-        echo "</div>";
-        echo "<div>";
-        echo $file['description'];
-        echo "</div>";
-        echo "<div>";
-        echo $file['file_name'];
-        echo "</div>";
-        echo "<div>";
-        echo floor($file['size']/1024) . 'KB';
-        echo "</div>";
-        echo "<div>";
-        echo $file['type'];
-        echo "</div>";
-        echo "<div>";
-        echo "<a href='edit_form.php?id={$file['id']}'>編輯</a>";
-        echo "<a href='./api/del.php?id={$file['id']}'>刪除</a>";
-        echo "</div>";
-    echo "</li>";
-}
+            }
+            echo "</div>";
+            echo "<div>";
+            echo $file['description'];
+            echo "</div>";
+            echo "<div>";
+            echo $file['file_name'];
+            echo "</div>";
+            echo "<div>";
+            echo floor($file['size']/1024) . 'KB';
+            echo "</div>";
+            echo "<div>";
+            echo $file['type'];
+            echo "</div>";
+            echo "<div>";
+            echo "<a href='edit_form.php?id={$file['id']}'>編輯</a>";
+            echo "<a href='./api/del.php?id={$file['id']}'>刪除</a>";
+            echo "</div>";
+        echo "</li>";
+    }
 echo "</ul>";
 }else{
-echo "目前尚無上傳資料";
+    echo "目前尚無上傳資料";
 }
 
 ?>
