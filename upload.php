@@ -17,7 +17,7 @@ include_once "./api/base.php";
     <title>檔案上傳</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .list{
+       .list{
             list-style-type:none;
             padding: 0;
             margin:1rem auto;
@@ -36,23 +36,28 @@ include_once "./api/base.php";
             background-color: lightgreen;
         }
         .list-item div:nth-child(1){
-            width:10%;
+            width:20%;
         }
         .list-item div:nth-child(1) img{
             width:150px;
             height:100px;
         }
         .list-item div:nth-child(2){
-            width:30%;
+            width:20%;
         }
         .list-item div:nth-child(3){
-            width:30%;
+            width:20%;
         }
         .list-item div:nth-child(4){
             width:10%;
         }
         .list-item div:nth-child(5){
             width:20%;
+            overflow: hidden;
+        }
+        .list-item div:nth-child(6){
+            width:10%;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -109,6 +114,10 @@ foreach($files as $file){
         echo "</div>";
         echo "<div>";
         echo $file['type'];
+        echo "</div>";
+        echo "<div>";
+        echo "<a href='edit_form.php?id={$file['id']}'>編輯</a>";
+        echo "<a href='./api/del.php?id={$file['id']}'>刪除</a>";
         echo "</div>";
     echo "</li>";
 }
