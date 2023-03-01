@@ -15,30 +15,36 @@
         2.  可能有數字、大小寫英文
     */
 
-    echo cert_to_png(3,5);
+    echo cert_to_png(3, 5);
 
-    function cert_to_png($start,$length){
-        $cert=cert_str($start,$length);
+    function cert_to_png($start, $length)
+    {
+        $cert = cert_str($start, $length);
 
-        $png=imagecreatetruecolor(200,50);
-        $white=imagecolorallocate($png,255,255,255);
-        imagestring($png,5,10,10,$cert,$white);
+        $png = imagecreatetruecolor(200, 50);
+        $white = imagecolorallocate($png, 255, 255, 255);
 
-        imagepng($png,'./cert.png');
-
-        // return $cert;
+        $x_start=10;
+        for ($i = 0; $i < strlen($cert); $i++) {
+            $c=mb_substr($cert,$i,1);         
+            imagestring($png, 5, $x_start, rand(10,30) , $c , $white);
+            $gap=rand(5,15);
+            $x_start=$x_start+10+$gap;         
+        }
+        imagepng($png, './cert.png');
+        return $cert;
     }
 
     function cert_str($start, $length)
     {
-        $cert='';
+        $cert = '';
         $l = rand($start, $length);
         for ($i = 0; $i <= $l; $i++) {
             $type = rand(1, 3);
             switch ($type) {
                 case '1':
                     // 數字
-                    $cert .= rand(0,9);
+                    $cert .= rand(0, 9);
                     break;
                 case '2':
                     // 大寫字母
