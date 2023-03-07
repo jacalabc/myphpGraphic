@@ -60,6 +60,7 @@ include_once "./api/base.php";
             overflow: hidden;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
  <h1 class="header">檔案上傳練習</h1>
@@ -74,11 +75,57 @@ if(isset($_GET['upload']) && $_GET['upload']=='success'){
 
 <form action="./api/upload.php" method="post" enctype="multipart/form-data">
     <ul>
-        <li>描述：<input type="text" name="description"></li>
-        <li>檔案：<input type="file" name="file_name"></li>
-        <li><input type="submit" value="上傳"></li>
+        <li>描述：<input type="text" name="description" id="description"></li>
+        <li>檔案：<input type="file" name="file_name" id="upload"></li>
+        <!-- <li><input type="submit" value="上傳"></li> -->
+        <li><input type="button" value="上傳" id="uploadBtn"></li>
+        <img src="" id="preview" style="width:250px;">
+
     </ul>
 </form>
+<script>
+
+$("input[type='file']").on("change",function(e){
+    let file=e.target.files[0];
+    console.log(file);
+    let reader=new FileReader();
+    let b64=reader.readAsDataURL(file);
+    let src=URL.createObjectURL(file);
+    reader.onload=()=>{
+        base64Image=reader.result;
+        $("#preview").attr('src',base64Image)
+    }
+})
+
+
+$("#uploadBtn").on("click",function(e){
+    let form=new FormData();
+    // console.log($("input[type='file']").prop('files'))
+    let img =$("input[type='file']").prop('files');
+    let img_name=img[0].name;
+    let reader=new FileReader();
+    let b64=reader.readAsDataURL(img[0]);
+    reader.onload=()=>{
+        base64Image=reader.result;
+        // console.log('ba64',base64Image);
+        $.post("./api/upload2.php",
+        {
+            'description':$("#description").val(),
+            'file_name':base64Image,
+            'img_name':img_name,
+            'img_type':img[0].type,
+            'img_size':img[0].size,
+        },
+            (res)=>{
+                console.log(res);
+                $(".list").append(res);
+            }
+        )
+    }
+
+})
+
+</script>
 
 <!----建立一個連結來查看上傳後的圖檔---->  
 <?php
